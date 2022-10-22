@@ -87,9 +87,20 @@ public class TaskMenager {
         public static void Remove (String [] str){
         Scanner scann = new Scanner (System.in);
         System.out.println(ConsoleColors.BLUE_BOLD+"Choose task");
-        String undo = scann.nextLine();
+        try {
+        String undo = scann.nextLine().toLowerCase();
+        if (undo.equals("list")){
+            list(data());
+        }
         int u = Integer.parseInt(undo);
-        str = ArrayUtils.remove(str, u);
+        str = ArrayUtils.remove(str, u);}
+        catch (IndexOutOfBoundsException a){
+            System.out.println(ConsoleColors.RED_BOLD+"The range is from 0 to"+" "+(str.length-1+"\n"+"Type 'LIST' to see tasks"));
+            Remove(data());
+        } catch (NumberFormatException b){
+            System.out.println("You must input index number"+"\n"+"Type 'LIST' to see tasks");
+            Remove(data());
+        }
         try (FileWriter fileWriter = new FileWriter("src/main/resources/task.csv", false)){
             for (int i=0; i<str.length-1; i++){
                 fileWriter.append(str[i]+"\n");
