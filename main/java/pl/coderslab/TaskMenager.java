@@ -88,28 +88,31 @@ public class TaskMenager {
         Scanner scann = new Scanner (System.in);
         System.out.println(ConsoleColors.BLUE_BOLD+"Choose task");
         try {
-        String undo = scann.nextLine().toLowerCase();
-        if (undo.equals("list")){
-            list(data());
-        }
-        int u = Integer.parseInt(undo);
-        str = ArrayUtils.remove(str, u);}
-        catch (IndexOutOfBoundsException a){
-            System.out.println(ConsoleColors.RED_BOLD+"The range is from 0 to"+" "+(str.length-1+"\n"+"Type 'LIST' to see tasks"));
-            Remove(data());
-        } catch (NumberFormatException b){
-            System.out.println("You must input index number"+"\n"+"Type 'LIST' to see tasks");
-            Remove(data());
-        }
-        try (FileWriter fileWriter = new FileWriter("src/main/resources/task.csv", false)){
-            for (int i=0; i<str.length-1; i++){
-                fileWriter.append(str[i]+"\n");
+            String undo = scann.nextLine().toLowerCase();
+            if (undo.equals("list")){
+                for (int i=0; i<str.length;i++){
+                    System.out.println(ConsoleColors.WHITE_BOLD+i+":"+" "+str[i]);
+                    Remove(data());
+                }
             }
-        } catch (IOException e){
-            System.out.println("File not found");
-        }
-            System.out.println(ConsoleColors.BLUE_BOLD+"Task removed");
-        menu();
+                int u = Integer.parseInt(undo);
+                str = ArrayUtils.remove(str, u);}
+        catch(IndexOutOfBoundsException a){
+                System.out.println(ConsoleColors.RED_BOLD + "The range is from 0 to" + " " + (str.length - 1 + "\n" + "Type 'LIST' to see tasks"));
+                Remove(data());
+            } catch(NumberFormatException b){
+                System.out.println(ConsoleColors.RED_BOLD + "You must input index number" + "\n" + "Type 'LIST' to see tasks");
+                Remove(data());
+            }
+            try (FileWriter fileWriter = new FileWriter("src/main/resources/task.csv", false)) {
+                for (int i = 0; i < str.length - 1; i++) {
+                    fileWriter.append(str[i] + "\n");
+                }
+            } catch (IOException e) {
+                System.out.println("File not found");
+            }
+            System.out.println(ConsoleColors.BLUE_BOLD + "Task removed");
+            menu();
     }
         public static void exit () {
             System.out.println(ConsoleColors.BLUE_BOLD + "See u soon");
